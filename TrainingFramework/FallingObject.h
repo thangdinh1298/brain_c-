@@ -18,6 +18,8 @@ public:
 
 	explicit FallingObject(COLOR color, float speed=0.0f);
 
+	~FallingObject();
+
 
 	static void	Init();
 
@@ -26,6 +28,8 @@ public:
 	void		ChangeNextColor();
 
 	void		ChangeRandomColor();
+
+	COLOR		GetCurrentColor();
 
 private:
 	COLOR m_currentColor;

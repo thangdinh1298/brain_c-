@@ -5,8 +5,8 @@
 
 //}
 
-AnimationSprite::AnimationSprite(std::shared_ptr<Models> model, std::shared_ptr<Shaders> shader, std::shared_ptr<Texture> texture, float frameTime, int numFrame) : 
-	Sprite2D(model, shader, texture), m_currentTime(0), m_currentFrame(0), m_frameTime(frameTime), m_numFrame(numFrame)
+AnimationSprite::AnimationSprite(std::shared_ptr<Models> model, std::shared_ptr<Shaders> shader, std::shared_ptr<Texture> texture, float frameTime, int numFrame) :
+	Sprite2D(model, shader, texture), m_currentTime(0), m_currentFrame(0), m_frameTime(frameTime), m_numFrame(numFrame), m_isActive(true)
 {
 }
 
@@ -87,4 +87,13 @@ void AnimationSprite::Update(GLfloat deltatime)
 		}
 		m_currentTime -= m_frameTime;
 	}
+}
+
+void AnimationSprite::SetActive(bool isActive)
+{
+	m_isActive = isActive;
+}
+bool AnimationSprite::isActive()
+{
+	return m_isActive;
 }

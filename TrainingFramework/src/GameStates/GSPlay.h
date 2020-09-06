@@ -34,9 +34,14 @@ public:
 private:
 
 	std::shared_ptr<Sprite2D> m_BackGround;
-	std::shared_ptr<Text>  m_score;
+	std::shared_ptr<Text>  m_scoreText;
 	std::shared_ptr<FallingObject> m_playerLeftCircle;
 	std::shared_ptr<FallingObject> m_playerRightCircle;
-	std::vector<std::shared_ptr<AnimationSprite>> m_gameObjects;
+	std::vector<std::shared_ptr<FallingObject>> m_gameObjects;
+	int m_score;
+
+	const int LEFT_SWITCH = (1 << 1);
+	const int RIGHT_SWITCH = (1 << 2);
+	int m_keyPressed;
 };
 

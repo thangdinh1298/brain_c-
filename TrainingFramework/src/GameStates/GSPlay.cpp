@@ -15,7 +15,7 @@
 extern int screenWidth; //need get on Graphic engine
 extern int screenHeight; //need get on Graphic engine
 
-GSPlay::GSPlay()
+GSPlay::GSPlay() : m_score(0), m_keyPressed(0)
 {
 }
 
@@ -53,8 +53,8 @@ void GSPlay::Init()
 	//text game title
 	shader = ResourceManagers::GetInstance()->GetShader("TextShader");
 	std::shared_ptr<Font> font = ResourceManagers::GetInstance()->GetFont("arialbd");
-	m_score = std::make_shared< Text>(shader, font, "score: 10", TEXT_COLOR::RED, 1.0);
-	m_score->Set2DPosition(Vector2(5, 25));
+	m_scoreText = std::make_shared< Text>(shader, font, "score: 0", TEXT_COLOR::RED, 1.0);
+	m_scoreText->Set2DPosition(Vector2(5, 25));
 
 
 }
@@ -80,10 +80,6 @@ void GSPlay::HandleEvents()
 {
 
 }
-
-const int LEFT_SWITCH = (1 << 1);
-const int RIGHT_SWITCH = (1 << 2);
-static int m_keyPressed = 0;
 
 void GSPlay::HandleKeyEvents(int key, bool bIsPressed)
 {
@@ -128,13 +124,28 @@ void GSPlay::Update(float deltaTime)
 
 	m_playerLeftCircle->Update(deltaTime);
 	m_playerRightCircle->Update(deltaTime);
+
+	//Update position of each gameObject
 	for (auto obj : m_gameObjects) {
 		obj->Update(deltaTime);
-		if (m_playerLeftCircle->Overlaps(obj) || m_playerRightCircle->Overlaps(obj))
+		//check collision against player object
+		if ((m_playerLeftCircle->Overlaps(obj) && m_playerLeftCircle->GetCurrentColor() == obj->GetCurrentColor())
+			|| (m_playerRightCircle->Overlaps(obj) && m_playerRightCircle->GetCurrentColor() == obj->GetCurrentColor()))
 		{
-			std::cout << "Overlaps\n";
+			//std::cout << "Overlaps\n";
+			obj->SetActive(false);
+			m_score++;
+			m_scoreText->setText(std::to_string(m_score));
 		}
 	}
+	// Remove inactive objects
+	for (int i = 0; i < m_gameObjects.size(); i++)
+	{
+		auto obj = m_gameObjects[i];
+		if (!obj->isActive()) m_gameObjects.erase(m_gameObjects.begin() + i);
+	}
+
+	//Spawn objects if any
 	auto ptr = Spawner::GetInstance()->Spawn(deltaTime);
 	if (ptr) {
 		m_gameObjects.push_back(ptr);
@@ -150,10 +161,12 @@ void GSPlay::Update(float deltaTime)
 void GSPlay::Draw()
 {
 	m_BackGround->Draw();
-	m_score->Draw();
+	m_scoreText->Draw();
 	m_playerLeftCircle->Draw();
 	m_playerRightCircle->Draw();
-	for (auto obj : m_gameObjects) obj->Draw();
+	for (auto obj : m_gameObjects) {
+		if(obj->isActive()) obj->Draw();
+	}
 }
 
 void GSPlay::SetNewPostionForBullet()

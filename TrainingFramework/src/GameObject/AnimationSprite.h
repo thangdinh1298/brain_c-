@@ -14,8 +14,11 @@ public:
 	void				Init() override;
 	void				Draw() override;
 	virtual void		Update(GLfloat deltatime) override;
+	void				SetActive(bool isActive);
+	bool				isActive();
 
 private: 
+	bool m_isActive;
 	GLfloat m_currentTime;
 	int m_currentFrame;
 	GLfloat m_frameTime;
