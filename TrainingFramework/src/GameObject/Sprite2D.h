@@ -28,6 +28,7 @@ public:
 
 	Vector2		Get2DPosition();
 	void		SetSize(GLint width, GLint height);
+	bool		Overlaps(std::shared_ptr<Sprite2D> that);
 
 };
 

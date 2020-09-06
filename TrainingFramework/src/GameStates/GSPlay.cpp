@@ -95,22 +95,22 @@ void GSPlay::HandleKeyEvents(int key, bool bIsPressed)
 	case 'F':
 		if (bIsPressed) {
 			m_keyPressed |= LEFT_SWITCH;
-			std::cout << "Key F pressed\n";
+			//std::cout << "Key F pressed\n";
 		}
 		else {
 			m_keyPressed &= ~LEFT_SWITCH;
-			std::cout << "Key F released\n";
+			//std::cout << "Key F released\n";
 		}
 		break;
 	case 'j':
 	case 'J':
 		if (bIsPressed) {
 			m_keyPressed |= RIGHT_SWITCH;
-			std::cout << "Key J pressed\n";
+			//std::cout << "Key J pressed\n";
 		}
 		else {
 			m_keyPressed &= ~RIGHT_SWITCH;
-			std::cout << "Key J released\n";
+			//std::cout << "Key J released\n";
 		}
 		break;
 	}
@@ -128,7 +128,13 @@ void GSPlay::Update(float deltaTime)
 
 	m_playerLeftCircle->Update(deltaTime);
 	m_playerRightCircle->Update(deltaTime);
-	for (auto obj : m_gameObjects) obj->Update(deltaTime);
+	for (auto obj : m_gameObjects) {
+		obj->Update(deltaTime);
+		if (m_playerLeftCircle->Overlaps(obj) || m_playerRightCircle->Overlaps(obj))
+		{
+			std::cout << "Overlaps\n";
+		}
+	}
 	auto ptr = Spawner::GetInstance()->Spawn(deltaTime);
 	if (ptr) {
 		m_gameObjects.push_back(ptr);

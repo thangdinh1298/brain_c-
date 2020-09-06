@@ -6,7 +6,7 @@ std::shared_ptr<Texture> FallingObject::m_textureVector[4] = {};
 std::shared_ptr<Shaders> FallingObject::m_shaders = nullptr;
 std::shared_ptr<Models> FallingObject::m_model = nullptr;
 
-FallingObject::FallingObject(COLOR color, float speed=0.0f)
+FallingObject::FallingObject(COLOR color, float speed)
 	: AnimationSprite (m_model, m_shaders, m_textureVector[color], 0.1f, 6), m_currentColor(color), m_speed(speed)
 {
 
@@ -38,7 +38,6 @@ void FallingObject::Update(GLfloat deltaTime)
 
 void FallingObject::ChangeNextColor() 
 {
-	//std::cout << "Changing color\n";
 	m_currentColor = static_cast<COLOR>((static_cast<int> (m_currentColor) + 1));
 	if (m_currentColor == COLOR::NUM_COLOR) m_currentColor = YELLOW;
 	this->SetTexture(m_textureVector[m_currentColor]);

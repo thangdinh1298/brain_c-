@@ -171,3 +171,19 @@ void Sprite2D::SetSize(GLint width, GLint height)
 	m_Vec3Scale = Vector3((float)m_iWidth / screenWidth, (float)m_iHeight / screenHeight, 1);
 	CaculateWorldMatrix();
 }
+
+bool Sprite2D::Overlaps(std::shared_ptr<Sprite2D> that)
+{
+	int thisLeft = this->m_Vec2DPos.x - this->m_iWidth / 2;
+	int thisRight = this->m_Vec2DPos.x + this->m_iWidth / 2;
+	int thisTop = this->m_Vec2DPos.y + this->m_iHeight / 2;
+	int thisBottom = this->m_Vec2DPos.y - this->m_iHeight / 2;
+
+	int thatLeft = that->m_Vec2DPos.x - that->m_iWidth / 2;
+	int thatRight = that->m_Vec2DPos.x + that->m_iWidth / 2;
+	int thatTop = that->m_Vec2DPos.y + that->m_iHeight / 2;
+	int thatBottom = that->m_Vec2DPos.y - that->m_iHeight / 2;
+
+	return thisLeft < thatRight&& thisRight > thatLeft &&
+		thisTop > thatBottom && thisBottom < thatTop;
+}
