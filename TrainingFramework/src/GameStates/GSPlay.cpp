@@ -10,6 +10,7 @@
 #include "Text.h"
 #include "../FallingObject.h"
 #include "AnimationSprite.h"
+#include "RedrawAnimation.h"
 #include "Spawner.h"
 
 extern int screenWidth; //need get on Graphic engine
@@ -37,7 +38,25 @@ void GSPlay::Init()
 	m_BackGround->Set2DPosition(screenWidth / 2, screenHeight / 2);
 	m_BackGround->SetSize(screenWidth, screenHeight);
 
+	texture = ResourceManagers::GetInstance()->GetTexture("light1");
+	m_light1 = std::make_shared<RedrawAnimation>(model, shader, texture, Vector2(105, 300), Vector2(-20, 400), 5.0f, -2.3f);
+
+	texture = ResourceManagers::GetInstance()->GetTexture("light2");
+	m_light2 = std::make_shared<RedrawAnimation>(model, shader, texture, Vector2(240, 400), Vector2(240 , 450), 0.0f, -5.0f);
+
+	texture = ResourceManagers::GetInstance()->GetTexture("light3");
+	m_light3 = std::make_shared<RedrawAnimation>(model, shader, texture, Vector2(350, 150), Vector2(-20, 300), 2.0f, 0.92f);
+
+	texture = ResourceManagers::GetInstance()->GetTexture("light5");
+	m_light5 = std::make_shared<RedrawAnimation>(model, shader, texture, Vector2(350, 550), Vector2(-20, 500), 1.5f, 0.69f);
+
 	shader = ResourceManagers::GetInstance()->GetShader("AnimationSpriteShader");
+	texture = ResourceManagers::GetInstance()->GetTexture("light4");
+
+	//Background light 4
+	m_light4 = std::make_shared<AnimationSprite>(model, shader, texture, 0.25f, 3);
+	m_light4->Set2DPosition(70, 100);
+	m_light4->SetSize(50, 50);
 
 	//Player Object
 	FallingObject::Init(); //Init class texture
@@ -121,7 +140,14 @@ void GSPlay::HandleTouchEvents(int x, int y, bool bIsPressed)
 
 void GSPlay::Update(float deltaTime)
 {
+	//Update background
+	m_light1->Update(deltaTime);
+	m_light2->Update(deltaTime);
+	m_light3->Update(deltaTime);
+	m_light4->Update(deltaTime);
+	m_light5->Update(deltaTime);
 
+	//Update game objects
 	m_playerLeftCircle->Update(deltaTime);
 	m_playerRightCircle->Update(deltaTime);
 
@@ -161,6 +187,12 @@ void GSPlay::Update(float deltaTime)
 void GSPlay::Draw()
 {
 	m_BackGround->Draw();
+	m_light1->Draw();
+	m_light2->Draw();
+	m_light3->Draw();
+	m_light4->Draw();
+	m_light5->Draw();
+
 	m_scoreText->Draw();
 	m_playerLeftCircle->Draw();
 	m_playerRightCircle->Draw();

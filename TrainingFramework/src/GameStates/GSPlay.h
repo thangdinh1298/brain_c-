@@ -34,6 +34,11 @@ public:
 private:
 
 	std::shared_ptr<Sprite2D> m_BackGround;
+	std::shared_ptr<Sprite2D> m_light1;
+	std::shared_ptr<Sprite2D> m_light2;
+	std::shared_ptr<Sprite2D> m_light3;
+	std::shared_ptr<AnimationSprite> m_light4;
+	std::shared_ptr<Sprite2D> m_light5;
 	std::shared_ptr<Text>  m_scoreText;
 	std::shared_ptr<FallingObject> m_playerLeftCircle;
 	std::shared_ptr<FallingObject> m_playerRightCircle;
