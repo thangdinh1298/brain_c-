@@ -43,7 +43,9 @@ private:
 	std::shared_ptr<FallingObject> m_playerLeftCircle;
 	std::shared_ptr<FallingObject> m_playerRightCircle;
 	std::vector<std::shared_ptr<FallingObject>> m_gameObjects;
+	std::vector<std::shared_ptr<Sprite2D>> m_listHeart;
 	int m_score;
+	int m_lives;
 
 	const int LEFT_SWITCH = (1 << 1);
 	const int RIGHT_SWITCH = (1 << 2);

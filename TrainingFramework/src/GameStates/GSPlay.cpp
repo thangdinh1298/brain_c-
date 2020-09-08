@@ -16,7 +16,7 @@
 extern int screenWidth; //need get on Graphic engine
 extern int screenHeight; //need get on Graphic engine
 
-GSPlay::GSPlay() : m_score(0), m_keyPressed(0)
+GSPlay::GSPlay() : m_score(0), m_keyPressed(0), m_lives(3)
 {
 }
 
@@ -49,6 +49,16 @@ void GSPlay::Init()
 
 	texture = ResourceManagers::GetInstance()->GetTexture("light5");
 	m_light5 = std::make_shared<RedrawAnimation>(model, shader, texture, Vector2(350, 550), Vector2(-20, 500), 1.5f, 0.69f);
+
+	//hearts
+	texture = ResourceManagers::GetInstance()->GetTexture("life");
+	for (int i = 0; i < 3; i++)
+	{
+		auto heart = std::make_shared<Sprite2D>(model, shader, texture);
+		heart->SetSize(50, 50);
+		heart->Set2DPosition(350 + (i*50), 55);
+		m_listHeart.push_back(heart);
+	}
 
 	shader = ResourceManagers::GetInstance()->GetShader("AnimationSpriteShader");
 	texture = ResourceManagers::GetInstance()->GetTexture("light4");
@@ -158,12 +168,27 @@ void GSPlay::Update(float deltaTime)
 		if ((m_playerLeftCircle->Overlaps(obj) && m_playerLeftCircle->GetCurrentColor() == obj->GetCurrentColor())
 			|| (m_playerRightCircle->Overlaps(obj) && m_playerRightCircle->GetCurrentColor() == obj->GetCurrentColor()))
 		{
-			//std::cout << "Overlaps\n";
 			obj->SetActive(false);
 			m_score++;
-			m_scoreText->setText(std::to_string(m_score));
+			m_scoreText->setText("Score: " + std::to_string(m_score));
+		}
+		else
+		{
+			Vector2& curPos = obj->Get2DPosition();
+			if (curPos.y > screenHeight-50)
+			{
+				obj->SetActive(false);
+				m_lives--;
+				if(!m_listHeart.empty()) m_listHeart.pop_back();
+			}
 		}
 	}
+
+	if (m_lives <= 0) 
+	{
+		GameStateMachine::GetInstance()->PopState();
+	}
+
 	// Remove inactive objects
 	for (int i = 0; i < m_gameObjects.size(); i++)
 	{
@@ -192,6 +217,11 @@ void GSPlay::Draw()
 	m_light3->Draw();
 	m_light4->Draw();
 	m_light5->Draw();
+
+	for (auto heartPtr : m_listHeart)
+	{
+		heartPtr->Draw();
+	}
 
 	m_scoreText->Draw();
 	m_playerLeftCircle->Draw();
