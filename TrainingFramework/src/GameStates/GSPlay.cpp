@@ -12,6 +12,8 @@
 #include "AnimationSprite.h"
 #include "RedrawAnimation.h"
 #include "Spawner.h"
+#include "ParticleEffect.h"
+#include "Star.h"
 
 extern int screenWidth; //need get on Graphic engine
 extern int screenHeight; //need get on Graphic engine
@@ -39,16 +41,16 @@ void GSPlay::Init()
 	m_BackGround->SetSize(screenWidth, screenHeight);
 
 	texture = ResourceManagers::GetInstance()->GetTexture("light1");
-	m_light1 = std::make_shared<RedrawAnimation>(model, shader, texture, Vector2(105, 300), Vector2(-20, 400), 5.0f, -2.3f);
+	m_light1 = std::make_shared<Star>(model, shader, texture, Vector2(105, 300), Vector2(-20, 400), 5.0f, -2.3f);
 
 	texture = ResourceManagers::GetInstance()->GetTexture("light2");
-	m_light2 = std::make_shared<RedrawAnimation>(model, shader, texture, Vector2(240, 400), Vector2(240 , 450), 0.0f, -5.0f);
+	m_light2 = std::make_shared<Star>(model, shader, texture, Vector2(240, 400), Vector2(240 , 450), 0.0f, -5.0f);
 
 	texture = ResourceManagers::GetInstance()->GetTexture("light3");
-	m_light3 = std::make_shared<RedrawAnimation>(model, shader, texture, Vector2(350, 150), Vector2(-20, 300), 2.0f, 0.92f);
+	m_light3 = std::make_shared<Star>(model, shader, texture, Vector2(350, 150), Vector2(-20, 300), 2.0f, 0.92f);
 
 	texture = ResourceManagers::GetInstance()->GetTexture("light5");
-	m_light5 = std::make_shared<RedrawAnimation>(model, shader, texture, Vector2(350, 550), Vector2(-20, 500), 1.5f, 0.69f);
+	m_light5 = std::make_shared<Star>(model, shader, texture, Vector2(350, 550), Vector2(-20, 500), 1.5f, 0.69f);
 
 	//hearts
 	texture = ResourceManagers::GetInstance()->GetTexture("life");
@@ -171,6 +173,7 @@ void GSPlay::Update(float deltaTime)
 			obj->SetActive(false);
 			m_score++;
 			m_scoreText->setText("Score: " + std::to_string(m_score));
+			m_particleEffects.push_back(obj->GetParticleEffect());
 		}
 		else
 		{
@@ -194,6 +197,17 @@ void GSPlay::Update(float deltaTime)
 	{
 		auto obj = m_gameObjects[i];
 		if (!obj->isActive()) m_gameObjects.erase(m_gameObjects.begin() + i);
+	}
+
+	for (auto& effect : m_particleEffects)
+	{
+		effect.Update(deltaTime);
+	}
+
+	for (int i = 0; i < m_particleEffects.size(); i++)
+	{
+		if (!m_particleEffects[i].IsAlive())
+			m_particleEffects.erase(m_particleEffects.begin() + i);
 	}
 
 	//Spawn objects if any
@@ -221,6 +235,11 @@ void GSPlay::Draw()
 	for (auto heartPtr : m_listHeart)
 	{
 		heartPtr->Draw();
+	}
+
+	for (auto& effect : m_particleEffects)
+	{
+		effect.Draw();
 	}
 
 	m_scoreText->Draw();

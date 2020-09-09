@@ -1,5 +1,5 @@
 #include "FallingObject.h"
-
+#include "ParticleEffect.h"
 
 
 std::shared_ptr<Texture> FallingObject::m_textureVector[4] = {};
@@ -56,4 +56,56 @@ void FallingObject::ChangeRandomColor()
 FallingObject::COLOR FallingObject::GetCurrentColor()
 {
 	return m_currentColor;
+}
+
+ParticleEffect FallingObject::GetParticleEffect()
+{
+	auto model = ResourceManagers::GetInstance()->GetModel("Sprite2D");
+	auto shader = ResourceManagers::GetInstance()->GetShader("TextureShader");
+	ParticleEffect effect(5.0f);
+	std::string color = "circle_";
+	//return effect;
+	switch (m_currentColor)
+	{
+	case COLOR::YELLOW:
+	{
+		color += "yellow";
+	}
+	break;
+	case COLOR::PINK:
+	{
+		color += "pink";
+	}
+	break;
+	case COLOR::PURPLE:
+	{
+		color += "purple";
+	}
+	break;
+	case COLOR::GREEN:
+		color += "green";
+	}
+
+	auto texture = ResourceManagers::GetInstance()->GetTexture(color + "_frag1");
+	auto ptr = std::make_shared<RedrawAnimation>(model, shader, texture,
+		this->Get2DPosition(), 25.0f, -25.0f);
+	effect.AddAnimation(ptr);
+
+	texture = ResourceManagers::GetInstance()->GetTexture(color + "_frag2");
+	ptr = std::make_shared<RedrawAnimation>(model, shader, texture,
+		this->Get2DPosition(), -25.0f, -25.0f);
+	effect.AddAnimation(ptr);
+
+	texture = ResourceManagers::GetInstance()->GetTexture(color + "_frag3");
+	ptr = std::make_shared<RedrawAnimation>(model, shader, texture,
+		this->Get2DPosition(), -25.0f, 25.0f);
+	effect.AddAnimation(ptr);
+
+	texture = ResourceManagers::GetInstance()->GetTexture(color + "_frag4");
+	ptr = std::make_shared<RedrawAnimation>(model, shader, texture,
+		this->Get2DPosition(), 25.0f, 25.0f);
+
+	effect.AddAnimation(ptr);
+
+	return effect;
 }

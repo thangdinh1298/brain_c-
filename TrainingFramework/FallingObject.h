@@ -4,6 +4,7 @@
 #include "ResourceManagers.h"
 #include <vector>
 
+class ParticleEffect;
 class FallingObject : public AnimationSprite
 {
 public:
@@ -30,6 +31,8 @@ public:
 	void		ChangeRandomColor();
 
 	COLOR		GetCurrentColor();
+
+	ParticleEffect GetParticleEffect();
 
 private:
 	COLOR m_currentColor;
