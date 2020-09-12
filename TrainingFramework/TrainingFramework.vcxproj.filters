@@ -81,6 +81,15 @@
     <ClCompile Include="src\GameManager\Spawner.cpp">
       <Filter>TrainingFramework\src\GameManager</Filter>
     </ClCompile>
+    <ClCompile Include="src\GameObject\RedrawAnimation.cpp">
+      <Filter>TrainingFramework\src\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\ParticleEffect.cpp">
+      <Filter>TrainingFramework\src\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\Star.cpp">
+      <Filter>TrainingFramework\src\GameObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h">
@@ -151,6 +160,15 @@
     </ClInclude>
     <ClInclude Include="src\GameManager\Spawner.h">
       <Filter>TrainingFramework\src\GameManager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\RedrawAnimation.h">
+      <Filter>TrainingFramework\src\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\ParticleEffect.h">
+      <Filter>TrainingFramework\src\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\Star.h">
+      <Filter>TrainingFramework\src\GameObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

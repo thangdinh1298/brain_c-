@@ -211,8 +211,9 @@ void GSPlay::Update(float deltaTime)
 	}
 
 	//Spawn objects if any
-	auto ptr = Spawner::GetInstance()->Spawn(deltaTime);
-	if (ptr) {
+	auto ptrs = Spawner::GetInstance()->Spawn(deltaTime, m_score);
+	if (!ptrs.empty()) {
+		for(auto ptr: ptrs)
 		m_gameObjects.push_back(ptr);
 	}
 	

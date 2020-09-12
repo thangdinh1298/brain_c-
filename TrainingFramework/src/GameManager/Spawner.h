@@ -8,8 +8,8 @@ class Spawner : public CSingleton<Spawner>
 public:
 	Spawner();
 	~Spawner();
-	std::shared_ptr<FallingObject> SpawnSingleObject();
-	std::shared_ptr<FallingObject> Spawn(float deltaTime);
+	std::shared_ptr<FallingObject> SpawnSingleObject(int currentScore);
+	std::vector<std::shared_ptr<FallingObject>> Spawn(float deltaTime, int currentScore);
 
 private:
 	enum SPAWN_TYPE
