@@ -109,3 +109,13 @@ ParticleEffect FallingObject::GetParticleEffect()
 
 	return effect;
 }
+
+float FallingObject::GetCurrentSpeed()
+{
+	return m_speed;
+}
+
+void FallingObject::SetCurrentSpeed(float speed)
+{
+	m_speed = speed;
+}

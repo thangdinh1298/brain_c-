@@ -44,7 +44,6 @@ std::vector<std::shared_ptr<FallingObject>> Spawner::Spawn(float deltaTime, int 
 	currentTime += deltaTime;
 	if (currentTime >= timeGenerate) 
 	{
-		srand(time(NULL));
 		int spawnType = rand() % SPAWN_TYPE::SPAWN_TYPE_COUNT;
 
 		switch (spawnType)

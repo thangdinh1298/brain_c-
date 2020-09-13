@@ -9,6 +9,7 @@ class FallingObject;
 class Spawner;
 class ParticleEffect;
 class Star;
+class TrapItem;
 
 class GSPlay :
 	public GameStateBase
@@ -47,6 +48,7 @@ private:
 	std::vector<std::shared_ptr<FallingObject>> m_gameObjects;
 	std::vector<std::shared_ptr<Sprite2D>> m_listHeart;
 	std::vector<ParticleEffect> m_particleEffects;
+	std::vector<std::shared_ptr<TrapItem>> m_listTrap;
 	int m_score;
 	int m_lives;
 

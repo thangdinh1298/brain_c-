@@ -34,6 +34,10 @@ public:
 
 	ParticleEffect GetParticleEffect();
 
+	float		GetCurrentSpeed();
+
+	void		SetCurrentSpeed(float speed);
+
 private:
 	COLOR m_currentColor;
 	float m_speed;

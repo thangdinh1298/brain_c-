@@ -269,6 +269,7 @@
     <ClCompile Include="src\GameObject\AnimationSprite.cpp" />
     <ClCompile Include="src\GameObject\ParticleEffect.cpp" />
     <ClCompile Include="src\GameObject\RedrawAnimation.cpp" />
+    <ClCompile Include="src\GameObject\SpeedUpTrap.cpp" />
     <ClCompile Include="src\GameObject\Sprite2D.cpp" />
     <ClCompile Include="src\GameObject\Camera.cpp" />
     <ClCompile Include="src\GameObject\Sprite3D.cpp" />
@@ -277,6 +278,8 @@
     <ClCompile Include="src\GameObject\Star.cpp" />
     <ClCompile Include="src\GameObject\Text.cpp" />
     <ClCompile Include="src\GameObject\Texture.cpp" />
+    <ClCompile Include="src\GameObject\TrapItem.cpp" />
+    <ClCompile Include="src\GameObject\TrapSpawner.cpp" />
     <ClCompile Include="src\GameStates\GameStatebase.cpp" />
     <ClCompile Include="src\GameStates\GameStateMachine.cpp" />
     <ClCompile Include="src\GameStates\GSIntro.cpp" />
@@ -297,6 +300,7 @@
     <ClInclude Include="src\GameObject\AnimationSprite.h" />
     <ClInclude Include="src\GameObject\ParticleEffect.h" />
     <ClInclude Include="src\GameObject\RedrawAnimation.h" />
+    <ClInclude Include="src\GameObject\SpeedUpTrap.h" />
     <ClInclude Include="src\GameObject\Sprite2D.h" />
     <ClInclude Include="src\GameObject\Camera.h" />
     <ClInclude Include="src\GameObject\Sprite3D.h" />
@@ -305,6 +309,8 @@
     <ClInclude Include="src\GameObject\Star.h" />
     <ClInclude Include="src\GameObject\Text.h" />
     <ClInclude Include="src\GameObject\Texture.h" />
+    <ClInclude Include="src\GameObject\TrapItem.h" />
+    <ClInclude Include="src\GameObject\TrapSpawner.h" />
     <ClInclude Include="src\GameStates\GameStatebase.h" />
     <ClInclude Include="src\GameStates\GameStateMachine.h" />
     <ClInclude Include="src\GameStates\GSIntro.h" />

@@ -90,6 +90,15 @@
     <ClCompile Include="src\GameObject\Star.cpp">
       <Filter>TrainingFramework\src\GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="src\GameObject\TrapItem.cpp">
+      <Filter>TrainingFramework\src\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\SpeedUpTrap.cpp">
+      <Filter>TrainingFramework\src\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\TrapSpawner.cpp">
+      <Filter>TrainingFramework\src\GameManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h">
@@ -169,6 +178,15 @@
     </ClInclude>
     <ClInclude Include="src\GameObject\Star.h">
       <Filter>TrainingFramework\src\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\SpeedUpTrap.h">
+      <Filter>TrainingFramework\src\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\TrapItem.h">
+      <Filter>TrainingFramework\src\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\TrapSpawner.h">
+      <Filter>TrainingFramework\src\GameManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

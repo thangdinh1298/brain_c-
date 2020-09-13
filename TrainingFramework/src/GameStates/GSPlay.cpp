@@ -14,6 +14,9 @@
 #include "Spawner.h"
 #include "ParticleEffect.h"
 #include "Star.h"
+#include "TrapSpawner.h"
+#include "TrapItem.h"
+#include <algorithm>
 
 extern int screenWidth; //need get on Graphic engine
 extern int screenHeight; //need get on Graphic engine
@@ -174,17 +177,26 @@ void GSPlay::Update(float deltaTime)
 			m_score++;
 			m_scoreText->setText("Score: " + std::to_string(m_score));
 			m_particleEffects.push_back(obj->GetParticleEffect());
+			continue;
 		}
-		else
+		
+		for (auto trapPtr : m_listTrap)
 		{
-			Vector2& curPos = obj->Get2DPosition();
-			if (curPos.y > screenHeight-50)
+			if (trapPtr->Overlaps(obj))
 			{
-				obj->SetActive(false);
-				m_lives--;
-				if(!m_listHeart.empty()) m_listHeart.pop_back();
+				trapPtr->Act(obj);
+				trapPtr->setActive(false);
 			}
 		}
+
+		Vector2& curPos = obj->Get2DPosition();
+		if (curPos.y > screenHeight-50)
+		{
+			obj->SetActive(false);
+			m_lives--;
+			if(!m_listHeart.empty()) m_listHeart.pop_back();
+		}
+
 	}
 
 	if (m_lives <= 0) 
@@ -198,6 +210,20 @@ void GSPlay::Update(float deltaTime)
 		auto obj = m_gameObjects[i];
 		if (!obj->isActive()) m_gameObjects.erase(m_gameObjects.begin() + i);
 	}
+
+	m_gameObjects.erase(std::remove_if(m_gameObjects.begin(), m_gameObjects.end(),
+		[](std::shared_ptr<FallingObject> ptr)
+		{
+			return !ptr->isActive();
+		}), m_gameObjects.end()
+	);
+
+	m_listTrap.erase(std::remove_if(m_listTrap.begin(), m_listTrap.end(), [](std::shared_ptr<TrapItem> ptr)
+		{
+			return !ptr->isActive();
+		}), 
+		m_listTrap.end()
+	);
 
 	for (auto& effect : m_particleEffects)
 	{
@@ -215,6 +241,15 @@ void GSPlay::Update(float deltaTime)
 	if (!ptrs.empty()) {
 		for(auto ptr: ptrs)
 		m_gameObjects.push_back(ptr);
+	}
+
+	auto trapPtrs = TrapSpawner::GetInstance()->Spawn(deltaTime);
+	if (!trapPtrs.empty())
+	{
+		for (auto ptr : trapPtrs)
+		{
+			m_listTrap.push_back(ptr);
+		}
 	}
 	
 	/*if (m_keyPressed & RIGHT_SWITCH) {
@@ -248,6 +283,11 @@ void GSPlay::Draw()
 	m_playerRightCircle->Draw();
 	for (auto obj : m_gameObjects) {
 		if(obj->isActive()) obj->Draw();
+	}
+
+	for (auto ptr : m_listTrap)
+	{
+		ptr->Draw();
 	}
 }
 
