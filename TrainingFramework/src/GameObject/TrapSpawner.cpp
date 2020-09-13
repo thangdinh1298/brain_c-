@@ -25,7 +25,7 @@ std::vector<std::shared_ptr<TrapItem>> TrapSpawner::Spawn(float deltaTime)
 	{
 		auto model = ResourceManagers::GetInstance()->GetModel("Sprite2D");
 		auto shader = ResourceManagers::GetInstance()->GetShader("TextureShader");
-		auto texture = ResourceManagers::GetInstance()->GetTexture("circle");
+		auto texture = ResourceManagers::GetInstance()->GetTexture("speed_up_trap");
 
 		auto ptr = std::make_shared<SpeedUpTrap>(model, shader, texture);
 		ptr->SetSize(50, 50);

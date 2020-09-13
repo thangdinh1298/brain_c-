@@ -16,6 +16,8 @@
 #include "Star.h"
 #include "TrapSpawner.h"
 #include "TrapItem.h"
+//#include "soloud.h"
+//#include "soloud_wav.h"
 #include <algorithm>
 
 extern int screenWidth; //need get on Graphic engine
@@ -23,12 +25,17 @@ extern int screenHeight; //need get on Graphic engine
 
 GSPlay::GSPlay() : m_score(0), m_keyPressed(0), m_lives(3)
 {
+	m_soloud.init();
+
+	m_wav.load("..\\Data\\Audio\\background.wav");
+	m_wav.setLooping(true);
+	m_soloud.play(m_wav);
 }
 
 
 GSPlay::~GSPlay()
 {
-
+	m_soloud.deinit();
 }
 
 

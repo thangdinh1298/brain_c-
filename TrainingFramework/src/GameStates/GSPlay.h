@@ -1,5 +1,7 @@
 #pragma once
 #include "gamestatebase.h"
+#include "soloud.h"
+#include "soloud_wav.h"
 
 class Sprite2D;
 class Sprite3D;
@@ -55,5 +57,8 @@ private:
 	const int LEFT_SWITCH = (1 << 1);
 	const int RIGHT_SWITCH = (1 << 2);
 	int m_keyPressed;
+
+	SoLoud::Soloud m_soloud;
+	SoLoud::Wav m_wav;
 };
 

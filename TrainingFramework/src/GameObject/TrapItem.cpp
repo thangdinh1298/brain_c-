@@ -8,7 +8,7 @@ TrapItem::TrapItem(std::shared_ptr<Models> model, std::shared_ptr<Shaders> shade
 
 TrapItem::~TrapItem()
 {
-	std::cout << "Trap being removed\n";
+	
 }
 
 bool TrapItem::isActive()

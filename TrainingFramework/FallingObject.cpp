@@ -14,7 +14,7 @@ FallingObject::FallingObject(COLOR color, float speed)
 
 FallingObject::~FallingObject()
 {
-	std::cout << "Object being destroyed\n";
+
 }
 
 //FallingObject::FallingObject(std::shared_ptr<Models> model, std::shared_ptr<Shaders> shader/*, std::shared_ptr<Texture> texture*/, float frameTime, int numFrame)
