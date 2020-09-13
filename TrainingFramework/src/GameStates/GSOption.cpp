@@ -3,7 +3,7 @@
 extern int screenWidth; //need get on Graphic engine
 extern int screenHeight; //need get on Graphic engine
 
-GSOption::GSOption() {
+GSOption::GSOption() : m_time(0.0f), m_switched(false) {
 
 }
  
@@ -16,30 +16,11 @@ void GSOption::Init() {
 	auto shader = ResourceManagers::GetInstance()->GetShader("TextureShader");
 
 	//background
-	auto texture = ResourceManagers::GetInstance()->GetTexture("bg_main_menu");
+	auto texture = ResourceManagers::GetInstance()->GetTexture("tutorial_left");
 	m_BackGround = std::make_shared<Sprite2D>(model, shader, texture);
 	m_BackGround->Set2DPosition(screenWidth / 2, screenHeight / 2);
 	m_BackGround->SetSize(screenWidth, screenHeight);
 
-	//Gameplay button
-	texture = ResourceManagers::GetInstance()->GetTexture("button_gameplay_option");
-	std::shared_ptr<GameButton> button = std::make_shared<GameButton>(model, shader, texture);
-	button->Set2DPosition(screenWidth / 2, 250);
-	button->SetSize(200, 50);
-	button->SetOnClick([]() {
-
-		});
-	m_listButton.push_back(button);
-
-	//Graphics button
-	texture = ResourceManagers::GetInstance()->GetTexture("button_graphics_option");
-	button = std::make_shared<GameButton>(model, shader, texture);
-	button->Set2DPosition(screenWidth / 2, 350);
-	button->SetSize(200, 50);
-	button->SetOnClick([]() {
-
-		});
-	m_listButton.push_back(button);
 }
 
 void GSOption::Exit() {
@@ -67,15 +48,28 @@ void GSOption::HandleTouchEvents(int x, int y, bool bIsPressed) {
 }
 
 void GSOption::Update(float deltaTime) {
-	m_BackGround->Update(deltaTime);
-	for (auto b : m_listButton) {
-		b->Update(deltaTime);
+	m_time += deltaTime;
+
+	if (m_time >= 1.3f)
+	{
+		if (!m_switched)
+		{
+			auto texture = ResourceManagers::GetInstance()->GetTexture("tutorial_right");
+			auto model = ResourceManagers::GetInstance()->GetModel("Sprite2D");
+			auto shader = ResourceManagers::GetInstance()->GetShader("TextureShader");
+			m_BackGround = std::make_shared<Sprite2D>(model, shader, texture);
+			m_BackGround->Set2DPosition(screenWidth / 2, screenHeight / 2);
+			m_BackGround->SetSize(screenWidth, screenHeight);
+			m_switched = true;
+		}
+		else 
+		{
+			GameStateMachine::GetInstance()->PopState();
+		}
+		m_time = 0;
 	}
 }
 
 void GSOption::Draw() {
 	m_BackGround->Draw();
-	for (auto b : m_listButton) {
-		b->Draw();
-	}
 }
